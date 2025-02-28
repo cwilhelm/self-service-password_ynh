@@ -1,0 +1,8 @@
+#!/bin/bash
+
+app="self-service-password"
+backup_dir="/var/backups/$app"
+
+tar -xzf $backup_dir/self-service-password.tar.gz -C /var/www/self-service-password
+
+echo "Restore complete."

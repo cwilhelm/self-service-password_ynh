@@ -1,0 +1,36 @@
+id = "self-service-password"
+name = "Self-Service Password"
+description = "A PHP application for LDAP password self-service."
+version = "1.0"
+url = "https://self-service-password.readthedocs.io/en/latest/installation.html"
+license = "GPL-3.0"
+maintainer = "Charles Wilhelm <charly.wilhelm@ieffects.com>"
+requirements = [ "php", "nginx", "ldap",]
+packaging_format = 2
+
+[upstream]
+license = "GPL-3.0"
+website = "https://github.com/ltb-project/self-service-password"
+code = "https://github.com/ltb-project/self-service-password.git"
+documentation = "https://self-service-password.readthedocs.io/"
+
+[integration]
+yunohost = ">= 11.1"
+helpers_version = "2.1"
+architectures = "all"
+multi_instance = false
+ldap = "not_relevant"
+sso = "not_relevant"
+disk = "1M"
+ram.build = "1M"
+ram.runtime = "1M"
+
+[install]
+    [install.domain]
+    # this is a generic question - ask strings are automatically handled by YunoHost's core
+    type = "domain"
+
+    [install.init_main_permission]
+    # this is a generic question - ask strings are automatically handled by YunoHost's core
+    type = "group"
+    default = "visitors"

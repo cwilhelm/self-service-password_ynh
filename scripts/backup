@@ -1,0 +1,9 @@
+#!/bin/bash
+
+app="self-service-password"
+backup_dir="/var/backups/$app"
+
+mkdir -p $backup_dir
+tar -czf $backup_dir/self-service-password.tar.gz /var/www/self-service-password
+
+echo "Backup complete."

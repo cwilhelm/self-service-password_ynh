@@ -1,0 +1,14 @@
+#!/bin/bash
+
+app="self-service-password"
+domain=$YNH_APP_ARG_DOMAIN
+
+echo "Removing Self-Service-Password from $domain..."
+
+rm -rf /var/www/self-service-password
+
+ynh_remove_nginx_config
+
+systemctl reload nginx
+
+echo "Removal complete."

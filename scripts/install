@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# YunoHost package installation script for Self-Service-Password
+
+app="self-service-password"
+domain=$YNH_APP_ARG_DOMAIN
+
+echo "Installing Self-Service-Password on $domain..."
+
+# Install dependencies
+ynh_install_app_dependencies "php php-fpm php-ldap nginx unzip"
+
+# Download Self-Service-Password
+mkdir -p /var/www/self-service-password
+cd /var/www/self-service-password
+wget https://github.com/ltb-project/self-service-password/archive/refs/tags/v1.7.2.tar.gz
+
+tar -xzf v1.7.2.tar.gz --strip-components=1
+rm v1.7.2.tar.gz
+
+# Configure Nginx
+ynh_add_nginx_config
+
+# Configure LDAP
+cp config.inc.php.example config.inc.php
+sed -i "s|ldap_uri = .*;|ldap_uri = 'ldap://localhost';|" config.inc.php
+sed -i "s|ldap_binddn = .*;|ldap_binddn = 'cn=admin,dc=yunohost,dc=org';|" config.inc.php
+sed -i "s|ldap_bindpw = .*;|ldap_bindpw = 'admin_password';|" config.inc.php
+
+# Reload services
+systemctl reload nginx
+
+echo "Installation complete on $domain."
